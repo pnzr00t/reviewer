@@ -18,11 +18,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let tourViewController = TourViewController()
+        //let rootViewController = TourViewController()
+        let rootViewController = SlidersReviewViewController()
 
         // create a basic UIWindow and activate it
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = tourViewController
+        window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
     }
 
