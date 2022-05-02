@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Kingfisher
 import RxSwift
 import RxCocoa
 import UIKit
@@ -14,9 +15,34 @@ import SnapKit
 class SlidersReviewViewController: UIViewController {
     private let disposeBag = DisposeBag()
 
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+
+        return scrollView
+    }()
+    private lazy var contentView: UIView = {
+        let contentView = UIView()
+
+        return contentView
+    }()
+
     private lazy var avatarImage: UIImageView = {
         let avatarImage = UIImageView(image: UIImage(systemName: "face.smiling.fill"))
-        avatarImage.layer.cornerRadius = Constants.avatarImageSize.width / 2
+        
+        let url = URL(string: "https://app.wegotrip.com/media/users/1/path32.png")
+        let processor = RoundCornerImageProcessor(cornerRadius: Constants.avatarImageSize.width / 2)
+
+        avatarImage.kf.setImage(
+            with: url,
+            placeholder: UIImage(systemName: "face.smiling.fill"),
+            options: [
+                .processor(processor),
+                .scaleFactor(UIScreen.main.scale),
+                .transition(.fade(1)),
+                .cacheOriginalImage
+            ]
+        )
+
         return avatarImage
     }()
 
@@ -94,68 +120,99 @@ class SlidersReviewViewController: UIViewController {
     private func commonInit() {
         view.backgroundColor = .white
 
-        view.addSubview(avatarImage)
+        view.addSubview(scrollView)
+        scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.snp.makeConstraints { make in
+            make.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            
+        }
+        // ContentWidth == SuperViewWidth
+        scrollView.contentLayoutGuide.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor).isActive = true
+
+        scrollView.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+        }
+
+        contentView.addSubview(avatarImage)
         avatarImage.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(Constants.topInset)
             make.leading.equalToSuperview().inset(Constants.leadingInset)
             make.size.equalTo(Constants.avatarImageSize)
         }
 
-        view.addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(avatarImage.snp.bottom).offset(Constants.avatarToTitleLabelTopOffset)
             make.leading.trailing.equalToSuperview().inset(Constants.leadingAndTrailingInset)
         }
 
-        view.addSubview(tourRatingSliderAndSmileView)
+        contentView.addSubview(tourRatingSliderAndSmileView)
         tourRatingSliderAndSmileView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(Constants.defaultVerticalOffset)
             make.leading.trailing.equalToSuperview().inset(Constants.leadingAndTrailingInset)
         }
 
-        view.addSubview(gidRatingSliderAndSmileView)
+        contentView.addSubview(gidRatingSliderAndSmileView)
         gidRatingSliderAndSmileView.snp.makeConstraints { make in
             make.top.equalTo(tourRatingSliderAndSmileView.snp.bottom).offset(Constants.defaultVerticalOffset)
             make.leading.trailing.equalToSuperview().inset(Constants.leadingAndTrailingInset)
         }
 
-        view.addSubview(infoRatingSliderAndSmileView)
+        contentView.addSubview(infoRatingSliderAndSmileView)
         infoRatingSliderAndSmileView.snp.makeConstraints { make in
             make.top.equalTo(gidRatingSliderAndSmileView.snp.bottom).offset(Constants.defaultVerticalOffset)
             make.leading.trailing.equalToSuperview().inset(Constants.leadingAndTrailingInset)
         }
 
-        view.addSubview(navigationRatingSliderAndSmileView)
+        contentView.addSubview(navigationRatingSliderAndSmileView)
         navigationRatingSliderAndSmileView.snp.makeConstraints { make in
             make.top.equalTo(infoRatingSliderAndSmileView.snp.bottom).offset(Constants.defaultVerticalOffset)
             make.leading.trailing.equalToSuperview().inset(Constants.leadingAndTrailingInset)
         }
 
-        view.addSubview(continueButton)
+        contentView.addSubview(continueButton)
         continueButton.snp.makeConstraints { make in
             make.top.equalTo(navigationRatingSliderAndSmileView.snp.bottom).offset(Constants.defaultVerticalOffset)
             make.leading.trailing.equalToSuperview().inset(Constants.leadingAndTrailingInset)
             make.height.equalTo(Constants.continueButtonHeight)
         }
 
-        view.addSubview(skipButton)
+        contentView.addSubview(skipButton)
         skipButton.snp.makeConstraints { make in
             make.top.equalTo(continueButton.snp.bottom).offset(Constants.defaultVerticalOffset)
             make.centerX.equalTo(continueButton.snp.centerX)
+            make.bottom.equalToSuperview().inset(Constants.bottomInset)
         }
     }
 
     private func setupBindings() {
-        /*addReviewButton.rx.tap
+        continueButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
 
-                let viewController = UIViewController()
+                debugPrint(":DEBUG:", "continueButton")
+
+                /*let viewController = UIViewController()
                 viewController.view.backgroundColor = .darkText
 
-                self.present(viewController, animated: true, completion: { debugPrint(":DEBUG:", "Completion") })
+                self.present(viewController, animated: true, completion: { debugPrint(":DEBUG:", "continueButton") })*/
             })
-            .disposed(by: disposeBag)*/
+            .disposed(by: disposeBag)
+
+        skipButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+
+                debugPrint(":DEBUG:", "skipButton")
+
+                /*let viewController = UIViewController()
+                viewController.view.backgroundColor = .darkText
+
+                self.present(viewController, animated: true, completion: { debugPrint(":DEBUG:", "skipButton") })*/
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -171,4 +228,6 @@ fileprivate enum Constants {
     static let continueButtonHeight: CGFloat = 44
 
     static let defaultVerticalOffset: CGFloat = 8
+
+    static let bottomInset: CGFloat = 16
 }

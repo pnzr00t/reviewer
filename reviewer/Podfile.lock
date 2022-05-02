@@ -1,4 +1,5 @@
 PODS:
+  - Kingfisher (6.3.1)
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
@@ -12,6 +13,7 @@ PODS:
   - StepSlider (1.8.0)
 
 DEPENDENCIES:
+  - Kingfisher
   - RxCocoa
   - RxGesture
   - RxSwift
@@ -20,6 +22,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Kingfisher
     - RxCocoa
     - RxGesture
     - RxRelay
@@ -28,6 +31,7 @@ SPEC REPOS:
     - StepSlider
 
 SPEC CHECKSUMS:
+  Kingfisher: 016c8b653a35add51dd34a3aba36b580041acc74
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxGesture: abadd243fc36db74df43dfc893829ddde94f1a3d
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
@@ -35,6 +39,6 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   StepSlider: 890db727e779fa99cb32afffc5887c1109e151f4
 
-PODFILE CHECKSUM: a29f12dd73b7c89b13eaca18f283819fb1035fd7
+PODFILE CHECKSUM: 0b997facc22ce7ffb2eab62f64984ca12c0aa1ca
 
 COCOAPODS: 1.11.2
