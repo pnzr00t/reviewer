@@ -10,4 +10,5 @@ target 'reviewer' do
   pod 'RxCocoa'
   pod 'RxGesture'
   pod 'RxSwift'
+  pod 'StepSlider'
 end

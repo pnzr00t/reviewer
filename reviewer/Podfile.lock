@@ -9,12 +9,14 @@ PODS:
     - RxSwift (= 6.5.0)
   - RxSwift (6.5.0)
   - SnapKit (5.0.1)
+  - StepSlider (1.8.0)
 
 DEPENDENCIES:
   - RxCocoa
   - RxGesture
   - RxSwift
   - SnapKit (~> 5.0.0)
+  - StepSlider
 
 SPEC REPOS:
   trunk:
@@ -23,6 +25,7 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - SnapKit
+    - StepSlider
 
 SPEC CHECKSUMS:
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
@@ -30,7 +33,8 @@ SPEC CHECKSUMS:
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  StepSlider: 890db727e779fa99cb32afffc5887c1109e151f4
 
-PODFILE CHECKSUM: a73252ecf260640fe95b6f925e79cc5496d97b5c
+PODFILE CHECKSUM: a29f12dd73b7c89b13eaca18f283819fb1035fd7
 
 COCOAPODS: 1.11.2

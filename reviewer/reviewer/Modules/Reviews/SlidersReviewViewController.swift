@@ -31,15 +31,59 @@ class SlidersReviewViewController: UIViewController {
         return titleLabel
     }()
 
-    private lazy var sliderAndSmileView: SliderAndSmileView = {
+    private lazy var tourRatingSliderAndSmileView: SliderAndSmileView = {
         let sliderAndSmileView = SliderAndSmileView()
 
         sliderAndSmileView.titleLabel.text = "Как вам тур в целом?"
         
         return sliderAndSmileView
     }()
+
+    private lazy var gidRatingSliderAndSmileView: SliderAndSmileView = {
+        let sliderAndSmileView = SliderAndSmileView()
+
+        sliderAndSmileView.titleLabel.text = "Понравился гид?"
+        
+        return sliderAndSmileView
+    }()
+
+    private lazy var infoRatingSliderAndSmileView: SliderAndSmileView = {
+        let sliderAndSmileView = SliderAndSmileView()
+
+        sliderAndSmileView.titleLabel.text = "Как вам подача информации?"
+        
+        return sliderAndSmileView
+    }()
+
+    private lazy var navigationRatingSliderAndSmileView: SliderAndSmileView = {
+        let sliderAndSmileView = SliderAndSmileView()
+
+        sliderAndSmileView.titleLabel.text = "Удобная навигация между шагами?"
+        
+        return sliderAndSmileView
+    }()
+
+    private lazy var continueButton: UIButton = {
+        let continueButton = UIButton()
+
+        continueButton.setTitle("Далее", for: .normal)
+        continueButton.setTitleColor(.white, for: .normal)
+        continueButton.backgroundColor = .systemBlue
+        continueButton.layer.cornerRadius = 8
+
+        return continueButton
+    }()
     
-    
+    private lazy var skipButton: UIButton = {
+        let skipButton = UIButton()
+
+        skipButton.setTitle("Не хочу отвечать", for: .normal)
+        skipButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16.0)
+        skipButton.setTitleColor(UIColor.gray, for: .normal)
+
+        return skipButton
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -63,10 +107,41 @@ class SlidersReviewViewController: UIViewController {
             make.leading.trailing.equalToSuperview().inset(Constants.leadingAndTrailingInset)
         }
 
-        view.addSubview(sliderAndSmileView)
-        sliderAndSmileView.snp.makeConstraints { make in
+        view.addSubview(tourRatingSliderAndSmileView)
+        tourRatingSliderAndSmileView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(Constants.defaultVerticalOffset)
             make.leading.trailing.equalToSuperview().inset(Constants.leadingAndTrailingInset)
+        }
+
+        view.addSubview(gidRatingSliderAndSmileView)
+        gidRatingSliderAndSmileView.snp.makeConstraints { make in
+            make.top.equalTo(tourRatingSliderAndSmileView.snp.bottom).offset(Constants.defaultVerticalOffset)
+            make.leading.trailing.equalToSuperview().inset(Constants.leadingAndTrailingInset)
+        }
+
+        view.addSubview(infoRatingSliderAndSmileView)
+        infoRatingSliderAndSmileView.snp.makeConstraints { make in
+            make.top.equalTo(gidRatingSliderAndSmileView.snp.bottom).offset(Constants.defaultVerticalOffset)
+            make.leading.trailing.equalToSuperview().inset(Constants.leadingAndTrailingInset)
+        }
+
+        view.addSubview(navigationRatingSliderAndSmileView)
+        navigationRatingSliderAndSmileView.snp.makeConstraints { make in
+            make.top.equalTo(infoRatingSliderAndSmileView.snp.bottom).offset(Constants.defaultVerticalOffset)
+            make.leading.trailing.equalToSuperview().inset(Constants.leadingAndTrailingInset)
+        }
+
+        view.addSubview(continueButton)
+        continueButton.snp.makeConstraints { make in
+            make.top.equalTo(navigationRatingSliderAndSmileView.snp.bottom).offset(Constants.defaultVerticalOffset)
+            make.leading.trailing.equalToSuperview().inset(Constants.leadingAndTrailingInset)
+            make.height.equalTo(Constants.continueButtonHeight)
+        }
+
+        view.addSubview(skipButton)
+        skipButton.snp.makeConstraints { make in
+            make.top.equalTo(continueButton.snp.bottom).offset(Constants.defaultVerticalOffset)
+            make.centerX.equalTo(continueButton.snp.centerX)
         }
     }
 
@@ -89,10 +164,11 @@ fileprivate enum Constants {
     static let leadingInset: CGFloat = 8
     static let trailingInset: CGFloat = 8
     static let leadingAndTrailingInset: CGFloat = 8
-    static let labelToTextOffset: CGFloat = 6
     
     static let avatarImageSize: CGSize = CGSize(width: 100, height: 100)
     static let avatarToTitleLabelTopOffset: CGFloat = 16
+    
+    static let continueButtonHeight: CGFloat = 44
 
-    static let defaultVerticalOffset: CGFloat = 16
+    static let defaultVerticalOffset: CGFloat = 8
 }

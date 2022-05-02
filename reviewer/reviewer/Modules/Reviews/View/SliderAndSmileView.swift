@@ -7,6 +7,7 @@
 
 import Foundation
 import SnapKit
+import StepSlider
 import UIKit
 
 class SliderAndSmileView: UIView {
@@ -24,12 +25,25 @@ class SliderAndSmileView: UIView {
     private lazy var smileLabel: UILabel = {
         let smileLabel = UILabel()
 
-        smileLabel.text = "😃";
+        smileLabel.text = "🤨";
         smileLabel.textColor = .black
         smileLabel.font = UIFont.systemFont(ofSize: 25)
 
         return smileLabel
     }()
+
+    private(set) var stepperValue = 2
+    private lazy var stepsSlider: StepSlider = {
+        let stepsSlider = StepSlider()
+
+        stepsSlider.index = UInt(stepperValue)
+        stepsSlider.maxCount = 5
+        stepsSlider.sliderCircleColor = .systemGray2
+        stepsSlider.addTarget(self, action: #selector(changeValue), for: .valueChanged)
+
+        return stepsSlider
+    }()
+
 
     init() {
         super.init(frame: .zero)
@@ -53,7 +67,35 @@ class SliderAndSmileView: UIView {
         smileLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(Constants.topInset)
             make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+        }
+
+        addSubview(stepsSlider)
+        stepsSlider.snp.makeConstraints { make in
+            make.top.equalTo(smileLabel.snp.bottom).offset(Constants.smilesToStepperSpacing)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().inset(Constants.bottomInsert)
+        }
+    }
+    
+    @objc private func changeValue(sender: StepSlider) {
+        switch sender.index {
+        case 0:
+            stepperValue = 0
+            smileLabel.text = "🤬"
+        case 1:
+            stepperValue = 1
+            smileLabel.text = "😡"
+        case 2:
+            stepperValue = 2
+            smileLabel.text = "🤨"
+        case 3:
+            stepperValue = 3
+            smileLabel.text = "🙂"
+        case 4:
+            stepperValue = 4
+            smileLabel.text = "😃"
+        default:
+            break
         }
     }
 }
@@ -65,6 +107,8 @@ fileprivate enum Constants {
     static let leadingAndTrailingInset: CGFloat = 8
     static let labelToTextOffset: CGFloat = 6
     
+    static let smilesToStepperSpacing: CGFloat = 8
+    
     static let avatarImageSize: CGSize = CGSize(width: 100, height: 100)
     static let avatarToTitleLabelTopOffset: CGFloat = 16
     
@@ -72,5 +116,5 @@ fileprivate enum Constants {
     
     static let addImageSize: CGSize = CGSize(width: 24, height: 24)
     static let labelToAddImageOffset: CGFloat = 16
-    static let bottomInsert: CGFloat = 50
+    static let bottomInsert: CGFloat = 0
 }
