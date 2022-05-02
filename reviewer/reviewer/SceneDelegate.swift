@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         //let rootViewController = TourViewController()
-        let rootViewController = SlidersReviewViewController()
+        let rootViewController = SlidersReviewViewController(tourID: UUID())
 
         // create a basic UIWindow and activate it
         window = UIWindow(windowScene: windowScene)

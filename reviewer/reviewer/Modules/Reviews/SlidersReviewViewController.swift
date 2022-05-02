@@ -13,6 +13,8 @@ import UIKit
 import SnapKit
 
 class SlidersReviewViewController: UIViewController {
+    private let tourID: UUID
+
     private let disposeBag = DisposeBag()
 
     private lazy var scrollView: UIScrollView = {
@@ -110,6 +112,16 @@ class SlidersReviewViewController: UIViewController {
         return skipButton
     }()
 
+    init(tourID: UUID) {
+        self.tourID = tourID
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -194,6 +206,16 @@ class SlidersReviewViewController: UIViewController {
 
                 debugPrint(":DEBUG:", "continueButton")
 
+                let reviewInfo = ReviewModel(
+                    tourID: self.tourID,
+                    tourRating: self.tourRatingSliderAndSmileView.stepperValue,
+                    gidRating: self.gidRatingSliderAndSmileView.stepperValue,
+                    informationRating: self.infoRatingSliderAndSmileView.stepperValue,
+                    navigationRating: self.navigationRatingSliderAndSmileView.stepperValue,
+                    tourReviewString: "",
+                    tourEnhancementString: ""
+                )
+
                 /*let viewController = UIViewController()
                 viewController.view.backgroundColor = .darkText
 
@@ -206,6 +228,16 @@ class SlidersReviewViewController: UIViewController {
                 guard let self = self else { return }
 
                 debugPrint(":DEBUG:", "skipButton")
+                
+                let reviewInfo = ReviewModel(
+                    tourID: self.tourID,
+                    tourRating: nil,
+                    gidRating: nil,
+                    informationRating: nil,
+                    navigationRating: nil,
+                    tourReviewString: "",
+                    tourEnhancementString: ""
+                )
 
                 /*let viewController = UIViewController()
                 viewController.view.backgroundColor = .darkText

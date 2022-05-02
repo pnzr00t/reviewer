@@ -10,10 +10,10 @@ import Foundation
 struct ReviewModel: Codable {
     let tourID: UUID
 
-    let tourGrade: Int?
-    let gitGrade: Int?
-    let informationGrade: Int?
-    let navigationGrade: Int?
+    let tourRating: Int?
+    let gidRating: Int?
+    let informationRating: Int?
+    let navigationRating: Int?
 
     let tourReviewString: String
     let tourEnhancementString: String
