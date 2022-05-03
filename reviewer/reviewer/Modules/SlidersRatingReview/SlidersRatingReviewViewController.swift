@@ -12,7 +12,7 @@ import RxCocoa
 import UIKit
 import SnapKit
 
-class SlidersReviewViewController: UIViewController {
+class SlidersRatingReviewViewController: UIViewController {
     private let tourID: UUID
 
     private let disposeBag = DisposeBag()
@@ -204,8 +204,6 @@ class SlidersReviewViewController: UIViewController {
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
 
-                debugPrint(":DEBUG:", "continueButton")
-
                 let reviewInfo = ReviewModel(
                     tourID: self.tourID,
                     tourRating: self.tourRatingSliderAndSmileView.stepperValue,
@@ -216,10 +214,12 @@ class SlidersReviewViewController: UIViewController {
                     tourEnhancementString: ""
                 )
 
-                /*let viewController = UIViewController()
-                viewController.view.backgroundColor = .darkText
+                // savedReviewCompletion Сильно не лучшее решение, но vc.modalPresentationStyle = .overCurrentContext
+                // Не дает закрыть следующий экран по свайпу вниз, а реализовывать закрытие по свайку вниз с GestureRecoginzer
+                // Нет времени т.к. проект должен быть сдан до среды
+                let detailReviewsViewController = DetailReviewsViewController(reviewInfo: reviewInfo, savedReview: { [weak self] in self?.dismiss(animated: true) })
 
-                self.present(viewController, animated: true, completion: { debugPrint(":DEBUG:", "continueButton") })*/
+                self.present(detailReviewsViewController, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
 
@@ -227,8 +227,6 @@ class SlidersReviewViewController: UIViewController {
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
 
-                debugPrint(":DEBUG:", "skipButton")
-                
                 let reviewInfo = ReviewModel(
                     tourID: self.tourID,
                     tourRating: nil,
@@ -239,10 +237,9 @@ class SlidersReviewViewController: UIViewController {
                     tourEnhancementString: ""
                 )
 
-                /*let viewController = UIViewController()
-                viewController.view.backgroundColor = .darkText
+                let detailReviewsViewController = DetailReviewsViewController(reviewInfo: reviewInfo, savedReview: { [weak self] in self?.dismiss(animated: true) })
 
-                self.present(viewController, animated: true, completion: { debugPrint(":DEBUG:", "skipButton") })*/
+                self.present(detailReviewsViewController, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
     }

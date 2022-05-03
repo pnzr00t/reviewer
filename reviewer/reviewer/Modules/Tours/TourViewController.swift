@@ -19,6 +19,8 @@ class TourViewController: UIViewController {
 
         addReviewButton.setTitle("Оставить отзыв", for: .normal)
         addReviewButton.setTitleColor(UIColor.black, for: .normal)
+        addReviewButton.layer.cornerRadius = 8
+        addReviewButton.backgroundColor = .blue
 
         return addReviewButton
     }()
@@ -35,6 +37,8 @@ class TourViewController: UIViewController {
         view.addSubview(addReviewButton)
         addReviewButton.snp.makeConstraints {
             $0.center.equalToSuperview()
+            $0.height.equalTo(Constants.makeReviewButtonHeight)
+            $0.leading.trailing.equalToSuperview().inset(Constants.leadingAndTrailingInset)
         }
     }
 
@@ -43,11 +47,16 @@ class TourViewController: UIViewController {
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
 
-                let viewController = UIViewController()
-                viewController.view.backgroundColor = .darkText
+                let viewController = SlidersRatingReviewViewController(tourID: UUID())
 
-                self.present(viewController, animated: true, completion: { debugPrint(":DEBUG:", "Completion") })
+                self.present(viewController, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
     }
+}
+
+fileprivate enum Constants {
+    static let leadingAndTrailingInset: CGFloat = 8
+    
+    static let makeReviewButtonHeight: CGFloat = 44
 }
